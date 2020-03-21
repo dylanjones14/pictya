@@ -69,17 +69,8 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = ?",
                           (request.form.get("username"),)).fetchone()
 
-        #rows2 = db.execute("SELECT * FROM users WHERE username = ?",
-        #                  (request.form.get("username"),)).fetchone()
-
-        #test=rows[2]
-        #test2=request.form.get("password")
-        #test3=count(rows)
-
-        #return render_template("output.html", output=rows)
 
         # Ensure username exists and password is correct
-        # if not check_password_hash(rows[2], request.form.get("password")):
         if not rows or not check_password_hash(rows[2], request.form.get("password")):
              return apology("invalid username and/or password", 403)
 
@@ -130,8 +121,6 @@ def register():
         # Check username does not exist
         elif db.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchone() != None:
            return apology("username already exists", 403)
-   
-           #ßreturn render_template("output.html", output=r)
 
         # Ensure password and confirmation password match
         elif request.form.get("password") != request.form.get("confirmation"):
@@ -160,3 +149,8 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+if __name__ == '__main__':
+ app.debug = True
+ port = int(os.environ.get("PORT", 5000))
+ app.run(host='0.0.0.0', port=port)
