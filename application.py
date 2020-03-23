@@ -1,5 +1,10 @@
 import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
+import cs50
+import urllib.parse
+import psycopg2
 import sqlite3
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -8,6 +13,17 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required
+
+urllib.parse.uses_netloc.append("postgres")
+url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 
 # Configure application
 app = Flask(__name__)
@@ -29,10 +45,10 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure SQLite database
-# db = SQL("sqlite:///finance.db")
-# conn = sqlite3.connect('pictya.db', check_same_thread=False)
-# db = conn.cursor()
+# Configure database
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
+
 
 @app.route("/")
 @login_required
@@ -41,18 +57,12 @@ def index():
 
     return render_template("index.html")
 
-
-
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
 
     # Forget any user_id
     session.clear()
-
-    conn = sqlite3.connect('pictya.db')
-    db = conn.cursor()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -66,9 +76,8 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?",
-                          (request.form.get("username"),)).fetchone()
-
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          {"username": request.form.get("username")}).fetchone()
 
         # Ensure username exists and password is correct
         if not rows or not check_password_hash(rows[2], request.form.get("password")):
@@ -76,8 +85,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]
-
-        render_template("output.html", output="success")
 
         # Redirect user to home page
         return redirect("/")
@@ -101,9 +108,6 @@ def logout():
 def register():
     """Register user"""
 
-    conn = sqlite3.connect('pictya.db')
-    db = conn.cursor()
-
     if request.method == "POST":
 
         # Ensure username was submitted
@@ -119,19 +123,19 @@ def register():
             return apology("must confirm password", 403)
 
         # Check username does not exist
-        elif db.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchone() != None:
-           return apology("username already exists", 403)
+        elif db.execute("SELECT * FROM users WHERE username = :username", {"username": request.form.get("username")}).fetchone():
+            return apology("username already exists", 403)
 
         # Ensure password and confirmation password match
         elif request.form.get("password") != request.form.get("confirmation"):
             return apology("passwords do not match", 403)
-
-        # Add user to database
-        db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (request.form.get("username"), generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8)))
+        
+        # Insert user and password into database
+        db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",{"username": request.form.get("username"), "hash": generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8)})
         
         # Save (and commit) changes
-        conn.commit()
-
+        db.commit()
+        
         # Redirect user to home page
         return redirect("/")
 
