@@ -1,17 +1,15 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-
 import cs50
 import urllib.parse
 import psycopg2
-import sqlite3
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from helpers import apology, login_required
 
 urllib.parse.uses_netloc.append("postgres")
@@ -51,11 +49,17 @@ db = scoped_session(sessionmaker(bind=engine))
 
 
 @app.route("/")
-@login_required
 def index():
     """Shows main homepage"""
 
     return render_template("index.html")
+
+@app.route("/watchlist")
+@login_required
+def watchlist():
+    """Shows watchlist"""
+
+    return render_template("watchlist.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -87,7 +91,7 @@ def login():
         session["user_id"] = rows[0]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/watchlist")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -137,7 +141,7 @@ def register():
         db.commit()
         
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/watchlist")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
