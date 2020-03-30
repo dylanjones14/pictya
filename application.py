@@ -54,12 +54,44 @@ def index():
 
     return render_template("index.html")
 
-@app.route("/watchlist")
+@app.route("/watchlist", methods=["GET", "POST"])
 @login_required
 def watchlist():
     """Shows watchlist"""
 
-    return render_template("watchlist.html")
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        f = request.form
+
+        for key in f.keys():
+            for value in f.getlist(key):
+                return render_template("output.html", output=key, output2=value)
+
+        #for field in request.form:
+
+            #render_template("output.html", output=field.name)
+
+            #print(field.name)
+            #print(field.description)
+            #print(field.label.text)
+            #print(field.data)
+
+            #db.execute("INSERT INTO watchlist(user_id, show_id, watched) VALUES (user=:user_id, show=:show_id, watched=:watched)", {"user_id": session["user_id"], "show_id": XXX, "watched": TRUE/FALSE})
+
+        # SEND FORM DATA TO watchlist table
+
+        return apology("TO DO", 403)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        
+        rows = db.execute("SELECT id, title, year, rating, watched FROM shows LEFT JOIN watchlist ON shows.id = watchlist.show_id WHERE rating IS NOT NULL AND rating < 9.4 ORDER BY ranking DESC, title ASC LIMIT 100")
+        # rows = db.execute("SELECT id, title, year, rating, watched FROM shows LEFT JOIN watchlist ON shows.id = watchlist.show_id WHERE rating IS NOT NULL AND rating < 9.4 ORDER BY rating DESC, title ASC LIMIT 100")
+
+        return render_template("watchlist.html", rows=rows)
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

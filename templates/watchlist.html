@@ -10,4 +10,28 @@
 
     <p>Select all films that you have previously watched...</p>
 
+    <form action="/watchlist" method="post">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class='left-align-column'>Title</th>
+                <th>Year</th>
+                <th>Rating</th>
+                <th>Watched?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td class='left-align-column'>{{row['title']}}</td>
+                <td>{{row['year']}}</td>
+                <td>{{row['rating']}}</td>
+                <td><div class="form-check"><input class="form-check-input position-static" type="checkbox" id="checkbox{{row['id']}}" value="option1" aria-label="..." {% if row['watched'] == True %}Checked{% endif %} ></div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
 {% endblock %}
