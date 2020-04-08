@@ -10,8 +10,8 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
 
-urllib.parse.uses_netloc.append("postgres")
-url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+"""urllib.parse.uses_netloc.append("postgres")
+url = urllib.parse.urlparse(os.environ["HEROKU_POSTGRESQL_WHITE_URL"])
 
 conn = psycopg2.connect(
     database=url.path[1:],
@@ -19,7 +19,7 @@ conn = psycopg2.connect(
     password=url.password,
     host=url.hostname,
     port=url.port
-)
+)"""
 
 # Configure application
 app = Flask(__name__)
@@ -42,7 +42,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure database
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(os.getenv("HEROKU_POSTGRESQL_WHITE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
