@@ -5,5 +5,11 @@
 {% endblock %}
 
 {% block main %}
-    <img alt="{{ top }}" class="border" src="http://memegen.link/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?alt=https://i.imgur.com/CsCgN7Ll.png" title="{{ top }}">
+	
+	<!-- Provide details of error message -->
+	<main role="main" class="container">
+      <h1 class="mt-5">Something went wrong!</h1>
+      <p class="lead">We encountered an error... "{{error}}" ({{ error_code }})
+    </main>
+    
 {% endblock %}

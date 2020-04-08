@@ -1,44 +1,14 @@
-nav .navbar-brand
+/* nav .navbar-brand
 {
     /* size for brand */
-    font-size: xx-large;
+    /* font-size: xx-large;
 }
 
-/* colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
-}
-nav .navbar-brand .red
-{
-    color: #ea433b;
-}
-nav .navbar-brand .yellow
-{
-    color: #f5b82e;
-}
-nav .navbar-brand .green
-{
-    color: #2e944b;
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  padding-top: 3.5rem;
 }
 
-main .form-control
-{
-    /* center form controls */
-    display: inline-block;
-
-    /* override Bootstrap's 100% width for form controls */
-    width: auto;
-}
-
-main
-{
-    /* scroll horizontally as needed */
-    overflow-x: auto;
-
-    /* center contents */
-    text-align: center;
-}
 
 main img
 {
@@ -46,7 +16,62 @@ main img
     max-width: 100%;
 }
 
-/* .left-align-column
-{
-    text-align: left;
-} */
+#select_friends{
+    display:none;
+}
+
+#friend1{
+    display:none;
+}
+
+#friend2{
+    display:none;
+}
+
+#friend3{
+    display:none;
+}
+
+.jumbotron {
+    background-color: #990000 !important;
+}
+
+.display-3 {
+    color: white;
+}
+
+.jumbotron_text {
+    color: white;
+}
+
+.form-center {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;

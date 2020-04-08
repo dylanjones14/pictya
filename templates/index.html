@@ -6,14 +6,33 @@
 
 {% block main %}
 
-    <h1>Pictya</h1>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Welcome to Pictya</h1>
+            <p class ="jumbotron_text">Pick the best film to watch for you and your friends</p>
+            <p><a class="btn btn-primary btn-lg" href="/register" role="button">Sign up &raquo;</a></p>
+        </div>
+    </div>
 
-    <p>Pick the best film to watch for you and your friends.</p>
+    <div class="container">
+        <!-- Columns explaing what the website does -->
+        <div class="row">
+            <div class="col-md-4">
+            	<h2>Update watchlist</h2>
+            	<p>Spend a few moments scrolling through our list of films and let us know what movies you have already seen.</p>
+            </div>
+            <div class="col-md-4">
+            	<h2>Pick a film</h2>
+            	<p>Let us know who you are watching with and choose which genre of film you want.</p>
+            </div>
+            <div class="col-md-4">
+            	<h2>List your platform</h2>
+            	<p>Let us know which streaming platforms you are signed up for, whether that's Netflix, Amazon Prime or others... </p>
+            	<p><span class="badge badge-primary">Coming soon</span></p>
+            </div>
+        </div>
+    </div> 
 
-    <p>Pictya helps you and your friends decide which movie to watch, saving time spent scrolling through Netflix, Amazon Prime and more.</p>
-
-    <p>Just tell Pictya who is in the room, the genre you want, the streaming services you are signed up to, and let Pictya do the rest.</p>
-
-    <p><a href="/register">Register</a> here to get started</p>
 
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Pick a film
+{% endblock %}
+
+{% block main %}
+
+    <div class="container p-5">
+
+        <!-- Pick a film form -->
+        <h1>Pick a film</h1>
+        <form action="/pick" method="post">
+
+            <!-- Choose which friends you are watching with -->
+            <p>Who are you watching a film with?</p>
+        	<div class="form-group">
+                <select class="form-control" multiple name="mymultiselect">
+                	{% for row in rows %}
+                    <option>{{row['username']}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <p>Please select 5 friends or less. Use 'Control' button on Windows or 'Command' button on Mac to select multiple.</p>
+            
+            <!-- Choose which genre of film you want to see -->
+            <p>What genre of film do you want to watch?</p>
+            <div class="form-group">
+            	<select class="form-control" name="selected_genre">
+                	<option>All genres</option>
+                	{% for genre in genres %}
+                    <option>{{genre['genre']}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    
+    </div>
+
+{% endblock %}

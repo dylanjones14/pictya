@@ -24,20 +24,15 @@ db = scoped_session(sessionmaker(bind=engine))
 
 # Create table 'shows'
 db.execute("DROP TABLE if exists shows CASCADE")
-db.execute("CREATE TABLE shows (id INT PRIMARY KEY, title TEXT, year NUMERIC, rating REAL, numVotes REAL, ranking REAL)")
+db.execute("CREATE TABLE shows (id INT PRIMARY KEY, title TEXT, year NUMERIC, genres TEXT, rating REAL, numVotes REAL, ranking REAL)")
 
 # The `genres` table will have a column called `show_id` that references the `shows` table above
 db.execute("DROP TABLE if exists genres CASCADE")
 db.execute("CREATE TABLE genres (show_id INT, genre TEXT, FOREIGN KEY(show_id) REFERENCES shows(id) ON DELETE CASCADE)")
 
-# Create test table 'ratings'
-db.execute("DROP TABLE if exists ratingss CASCADE")
-# db.execute("CREATE TABLE ratings (id INT PRIMARY KEY, averageRating REAL, numVotes INTEGER)")
-
-
 # Open TSV file
 # https://datasets.imdbws.com/title.basics.tsv.gz and https://datasets.imdbws.com/title.ratings.tsv.gz
-with open("shows.csv", "r") as titles:
+with open("title.basics.tsv", "r") as titles:
 
     # Create DictReaders
     reader = csv.DictReader(titles, delimiter="\t")
@@ -49,10 +44,8 @@ with open("shows.csv", "r") as titles:
         # If non-adult TV show
         if row["titleType"] == "movie" and row["isAdult"] == "0":
 
-
             # If year not missing
             if row["startYear"] != "\\N":
-
 
                 # If since 1970
                 startYear = int(row["startYear"])
@@ -62,9 +55,8 @@ with open("shows.csv", "r") as titles:
                     # Trim prefix from tconst
                     id = int(row["tconst"][2:])
                 
-
                     # Insert show
-                    db.execute("INSERT INTO shows (id, title, year) VALUES(:id, :title, :year)", {"id": id, "title": row["primaryTitle"], "year": startYear})
+                    db.execute("INSERT INTO shows (id, title, year, genres) VALUES(:id, :title, :year, :genres)", {"id": id, "title": row["primaryTitle"], "year": startYear, "genres": row['genres']})
 
                     # Insert genres
                     if row["genres"] != "\\N":

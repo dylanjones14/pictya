@@ -24,7 +24,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 # Open TSV file
 # https://datasets.imdbws.com/title.basics.tsv.gz and https://datasets.imdbws.com/title.ratings.tsv.gz
-with open("ratings.csv", "r") as ratings:
+with open("title.ratings.tsv", "r") as ratings:
 
     ratings_reader = csv.DictReader(ratings, delimiter="\t")
 

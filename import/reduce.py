@@ -1,31 +1,18 @@
 import csv
 
-#with open("title.ratings.tsv", "r") as inp, open("ratings.csv", "w") as out:
-	
-#	reader = csv.DictReader(inp, delimiter="\t")
-#	writer = csv.DictWriter(out, delimiter="\t", fieldnames=reader.fieldnames)
+# Opens large tsv file and creates a new one with limited number (100,000) rows
 
-#	headers = {} 
-#	for n in writer.fieldnames:
-#		headers[n] = n
-#	writer.writerow(headers)
-
-#	count = 0
-#	for row in reader:
-#		if count == 0:
-#			pass
-#		else:
-#			count = count + 1
-			
-#			writer.writerow('tconst')
-#			if count == 200: 
-#				exit(0)
-
+# Run once with title.ratings.tsv and ratings.csv, then run again with title.basics.tsv and shows.csv
 with open("title.ratings.tsv",'r') as inp, open("ratings.csv",'w') as out:
+    
+    # Create reader and writer
     dr = csv.DictReader(inp, delimiter='\t')
-
     dw = csv.DictWriter(out, delimiter='\t', fieldnames=dr.fieldnames)
+    
+    # Write header names
     dw.writerow(dict((fn,fn) for fn in dr.fieldnames))
+    
+    # Write 100,000 rows
     count = 0
     for row in dr:
         count = count + 1
