@@ -1,5 +1,7 @@
 # pictya
 
+Updating readme.
+
 This is the Pictya app, that I have developed to help you and your friends choose what film to watch.
 
 IMDB API not available, only tsv datasets. Other movie databases with free APIs are available, but wasn't satisfied with rating systems.
