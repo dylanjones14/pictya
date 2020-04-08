@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
 
-"""urllib.parse.uses_netloc.append("postgres")
+urllib.parse.uses_netloc.append("postgres")
 url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
 
 conn = psycopg2.connect(
@@ -19,7 +19,7 @@ conn = psycopg2.connect(
     password=url.password,
     host=url.hostname,
     port=url.port
-)"""
+)
 
 # Configure application
 app = Flask(__name__)
