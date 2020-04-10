@@ -9,8 +9,8 @@
     <div class="container p-5">
 
         <!-- Ask user to identify all films that they have watched previously -->
-        <h1>Watchlist</h1>
-        <p>Select all films that you have previously watched...</p>
+        <h1>Your watchlist</h1>
+        <p class="extra_spacing">Have a scroll through our list of movies and select those you have seen before to create your own watchlist. Be sure to keep this up to date when you watch new movies.</p>
         <form action="/watchlist" method="post">
         <table id="pagination" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -41,6 +41,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <p class="extra_spacing"><i>Please note - you can only submit preferences for one page at a time. I have limited the data to 'movies' only, year > 1970 and rating >6.5 for speed & cost.</i></p>
         <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>

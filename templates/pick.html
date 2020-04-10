@@ -13,7 +13,8 @@
         <form action="/pick" method="post">
 
             <!-- Choose which friends you are watching with -->
-            <p>Who are you watching a film with?</p>
+            <p class="extra_spacing">Let us know who’s watching and your genre of choice, and we will show you the highest rated movies not featured on any of your watchlists.</p>
+            <p>Who are you watching with?</p>
         	<div class="form-group">
                 <select class="form-control" multiple name="mymultiselect">
                 	{% for row in rows %}
@@ -21,10 +22,10 @@
                     {% endfor %}
                 </select>
             </div>
-            <p>Please select 5 friends or less. Use 'Control' button on Windows or 'Command' button on Mac to select multiple.</p>
+            <p><i>Please select up to 5 friends. Use the 'Control' button on Windows or 'Command' button on Mac to select multiple.</i></p>
             
             <!-- Choose which genre of film you want to see -->
-            <p>What genre of film do you want to watch?</p>
+            <p>What genre do you want?</p>
             <div class="form-group">
             	<select class="form-control" name="selected_genre">
                 	<option>All genres</option>
@@ -33,7 +34,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit">Pick a film</button>
         </form>
     
     </div>
